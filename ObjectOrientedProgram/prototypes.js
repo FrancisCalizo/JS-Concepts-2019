@@ -11,11 +11,16 @@ Book.prototype.getSummary = function() {
 }
 
 // Get Age
-// Cant use arrow function because function is not created
+// Cant use arrow function (Scope vs. Context)
 Book.prototype.getAge = function(){
   const years = new Date().getFullYear() - this.year;
   return `${this.title} is ${years} old`;
 };
+
+Book.prototype.revise = function(newYear){
+  this.year = newYear;
+  this.revised = true;
+}
 
 // Instantiate an Object from Constructor above
 const book1 = new Book('Holes', 'Stanley Morgan', '1992');
@@ -25,3 +30,5 @@ console.log(book1);
 console.log(book2);
 console.log(book1.getSummary());
 console.log(book1.getAge());
+book2.revise('2018');
+console.log(book2);
