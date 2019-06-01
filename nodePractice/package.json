@@ -2,10 +2,10 @@
   "name": "projects2019",
   "version": "1.0.0",
   "description": "Node Crash Course",
-  "main": "indexTwo.js",
+  "main": "indexThree.js",
   "scripts": {
-    "start": "node indexTwo.js",
-    "dev": "nodemon indexTwo.js"
+    "start": "node indexThree.js",
+    "dev": "nodemon indexThree.js"
   },
   "author": "Francis Calizo",
   "license": "ISC",
