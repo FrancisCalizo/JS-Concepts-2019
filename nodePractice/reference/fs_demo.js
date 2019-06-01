@@ -1,5 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+// "FS Module is used for actually operating on files. Path Module for manipulating
+// paths, which you may then use with the fs module"
+const fs = require('fs');
+const path = require('path');
 
 // Create a folder
 // fs.mkdir(path.join(__dirname, "/test"), {}, err => {
@@ -24,15 +26,15 @@ const path = require("path");
 // });
 
 // Read File
-fs.readFile(path.join(__dirname, "/test", "hello.txt"), "utf8", (err, data) => {
+fs.readFile(path.join(__dirname, '/test', 'hello.txt'), 'utf8', (err, data) => {
   if (err) throw err;
   console.log(data);
 });
 
 // Rename File
 fs.rename(
-  path.join(__dirname, "/test", "hello.txt"),
-  path.join(__dirname, "/test", "helloworld.txt"),
+  path.join(__dirname, '/test', 'hello.txt'),
+  path.join(__dirname, '/test', 'helloworld.txt'),
   (err, data) => {
     if (err) throw err;
     console.log(`File renamed...`);
