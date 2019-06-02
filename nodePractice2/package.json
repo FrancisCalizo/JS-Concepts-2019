@@ -1,0 +1,16 @@
+{
+  "name": "nodepractice2",
+  "version": "1.0.0",
+  "description": "Some Nodejs Practice from Traversy Media",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "Francis Calizo",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
