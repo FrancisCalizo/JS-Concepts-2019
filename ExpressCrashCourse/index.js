@@ -4,6 +4,7 @@ const logger = require('./middleware/logger');
 
 const app = express();
 
+// Create Your Own Middleware
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 // });
@@ -11,7 +12,7 @@ const app = express();
 // Init Middleware
 // app.use(logger);
 
-// Body Parser Middlware (comes with Express)
+// Body Parser Middlware (comes with Express now)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
