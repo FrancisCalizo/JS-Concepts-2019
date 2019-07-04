@@ -54,22 +54,37 @@ router.put('/:id', (req, res) => {
   }
 });
 
-// Delete Member
+// Delete Member (Brad's Way)
 router.delete('/:id', (req, res) => {
   const found = members.some(member => member.id === parseInt(req.params.id));
 
   if (found) {
-    // res.json(members.filter(member => member.id === parseInt(req.params.id)));
-    members.forEach(member => {
-      if (member.id === parseInt(req.params.id)) {
-        members.splice(members.indexOf(member), 1);
-
-        res.json(members);
-      }
+    res.json({
+      msg: 'Member Deleted',
+      members: members.filter(member => member.id !== parseInt(req.params.id))
     });
   } else {
-    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+    res
+      .status(400)
+      .json({ msg: `No member found with the id of ${req.params.id}` });
   }
 });
+
+// Delete Member (My Way)
+// router.delete('/:id', (req, res) => {
+//   const found = members.some(member => member.id === parseInt(req.params.id));
+
+//   if (found) {
+//     members.forEach(member => {
+//       if (member.id === parseInt(req.params.id)) {
+//         members.splice(members.indexOf(member), 1);
+
+//         res.json(members);
+//       }
+//     });
+//   } else {
+//     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+//   }
+// });
 
 module.exports = router;
