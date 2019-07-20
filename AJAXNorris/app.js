@@ -9,7 +9,22 @@ function getJokes(e) {
   e.preventDefault();
 
   xhr.onload = function() {
-    console.log(JSON.parse(xhr.response).value[0].joke);
+    if (this.status == 200) {
+      const response = JSON.parse(this.responseText);
+
+      let output = '';
+
+      // Check if API sends back a success response in JSON
+      if (response.type === 'success') {
+        response.value.forEach(joke => {
+          output += `<li>${joke.joke}</li>`;
+        });
+      } else {
+        output += `<li>Something went wrong</li>`;
+      }
+
+      document.querySelector('.jokes').innerHTML = output;
+    }
   };
   xhr.send();
 }
