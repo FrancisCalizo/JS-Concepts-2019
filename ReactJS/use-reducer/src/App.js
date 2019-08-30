@@ -1,53 +1,77 @@
-import React from 'react';
+import React, {useReducer, Fragment} from 'react';
 
-const App = () => {
+// Inital State
+const initialTodos = [
+  {
+    id: 'a',
+    task: 'Learn React',
+    complete: false,
+  },
+  {
+    id: 'b',
+    task: 'Learn Firebase',
+    complete: false,
+  },
+];
 
-  // Inital State
-  const todos = [
-    {
-      id: 'a',
-      task: 'Learn React',
-      complete: false,
-    },
-    {
-      id: 'b',
-      task: 'Learn Firebase',
-      complete: false,
-    },
-  ];
-
-  const todoReducer = (state, action) => {
-    switch(action.type){
-      case 'DO_TODO':
+const todoReducer = (state, action) => {
+  switch(action.type){
+    case 'DO_TODO':
+      return state.map(todo => {
+        if(todo.id === action.payload.id){
+          return {
+            ...todo, complete: true
+          }
+        } else {
+          return todo;
+        }
+      })
+    case 'UNDO_TODO':
         return state.map(todo => {
-          if(todo.id === action.id){
+          if(todo.id === action.payload.id){
             return {
-              ...todo, complete: true
+              ...todo, complete: false
             }
           } else {
             return todo;
           }
         })
-        default:
-          return state;
-    }
+    default:
+      return state;
   }
+}
 
-  const action = {
-    type: 'DO_TODO',
-    id: 'a'
+const App = () => {
+
+  const [currentState, dispatch] = useReducer(todoReducer, initialTodos)
+
+  const onChange = (todo) => {
+    dispatch({
+      type: todo.complete ? 'UNDO_TODO' : 'DO_TODO',
+      payload: {
+        id: todo.id
+      }
+    })
   }
-
-  const result = todoReducer(todos, action)
 
   return (
-      <div>
-        {result.map(todo => (
-          <h1 key={todo.id}>{todo.id} - {todo.task} - {todo.complete.toString()}</h1>
+    <Fragment>
+      <ul style={style}>
+        {currentState.map(todo => (
+          <li key={todo.id}>
+            <label>
+              <input type="checkbox" checked={todo.complete} onChange={()=> onChange(todo)}/>
+              {todo.task}
+            </label>
+          </li>
         ))}
-        {console.log({todos})}
-      </div>
+      </ul>
+    </Fragment>
   );
 };
+
+const style = {
+  listStyleType: 'none'
+}
 
 export default App;
