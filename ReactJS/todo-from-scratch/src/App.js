@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// Uses useReducer Hook
+import React, { useReducer } from 'react';
 
 const initialTodos = [
   {
@@ -18,31 +19,61 @@ const initialTodos = [
   }
 ];
 
+const todoReducer = (state, action) => {
+  console.log(action);
+  switch (action.type) {
+    case 'DO_TODO':
+      return state.map(todo => {
+        if (todo.id === action.payload.id) {
+          console.log(todo);
+          return {
+            ...todo,
+            completed: true
+          };
+        } else {
+          return todo;
+        }
+      });
+    case 'UNDO_TODO':
+      return state.map(todo => {
+        if (todo.id === action.payload.id) {
+          return {
+            ...todo,
+            completed: false
+          };
+        } else {
+          return todo;
+        }
+      });
+
+    default:
+      return state;
+  }
+};
+
 const App = () => {
-  const [todos, setTodos] = useState(initialTodos);
+  const [currentTodos, dispatch] = useReducer(todoReducer, initialTodos);
 
-  const handleChange = id => {
-    const temporaryTodos = todos.map(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
+  const handleChange = todo => {
+    dispatch({
+      type: todo.completed ? 'UNDO_TODO' : 'DO_TODO',
+      payload: {
+        id: todo.id
       }
-      return todo;
     });
-
-    setTodos(temporaryTodos);
   };
 
   return (
     <div>
       <h1>Todo List</h1>
       <ul style={{ listStyleType: 'none' }}>
-        {todos.map(todo => (
+        {currentTodos.map(todo => (
           <li key={todo.id}>
             <label>
               <input
                 type="checkbox"
                 checked={todo.completed}
-                onChange={() => handleChange(todo.id)}
+                onChange={() => handleChange(todo)}
               />
               {todo.task}
             </label>
