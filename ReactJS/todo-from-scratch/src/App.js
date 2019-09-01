@@ -20,12 +20,10 @@ const initialTodos = [
 ];
 
 const todoReducer = (state, action) => {
-  console.log(action);
   switch (action.type) {
     case 'DO_TODO':
       return state.map(todo => {
         if (todo.id === action.payload.id) {
-          console.log(todo);
           return {
             ...todo,
             completed: true
@@ -45,7 +43,6 @@ const todoReducer = (state, action) => {
           return todo;
         }
       });
-
     default:
       return state;
   }
