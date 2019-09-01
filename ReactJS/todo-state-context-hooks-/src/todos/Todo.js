@@ -1,9 +1,6 @@
-import React, { Fragment, useContext } from 'react';
-import { TodoContext } from '../context/TodoContext';
+import React, { Fragment } from 'react';
 
 const Todo = ({ todo, handleChange }) => {
-  const value = useContext(TodoContext);
-
   return (
     <Fragment>
       <li>

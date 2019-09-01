@@ -7,7 +7,7 @@ export const TodoState = props => {
   const [todos, setTodos] = useState(initialTodos);
 
   return (
-    <TodoContext.Provider value={'hello'}>
+    <TodoContext.Provider value={[todos, setTodos]}>
       {props.children}
     </TodoContext.Provider>
   );
