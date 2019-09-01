@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import initialTodos from './api/Todos';
 import TodoList from './todos/TodoList';
+import { TodoState } from './context/TodoContext';
 
 const App = () => {
   const [todos, setTodos] = useState(initialTodos);
@@ -16,10 +17,12 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      <TodoList todos={todos} handleChange={handleChange} />
-    </div>
+    <TodoState>
+      <div>
+        <h1>Todo List</h1>
+        <TodoList todos={todos} handleChange={handleChange} />
+      </div>
+    </TodoState>
   );
 };
 

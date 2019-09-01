@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
+import { TodoContext } from '../context/TodoContext';
 
 const Todo = ({ todo, handleChange }) => {
+  const value = useContext(TodoContext);
+
   return (
-    <div>
+    <Fragment>
       <li>
         <label>
           <input
@@ -13,7 +16,7 @@ const Todo = ({ todo, handleChange }) => {
           {todo.task}
         </label>
       </li>
-    </div>
+    </Fragment>
   );
 };
 
