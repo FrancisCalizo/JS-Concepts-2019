@@ -1,7 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 const app = express();
 
 import jwt from 'jsonwebtoken';
+import { access } from 'fs';
 
 // Body Parser - allows application use json from the body that gets passed to it from requests
 app.use(express.json());
@@ -17,19 +21,34 @@ const posts = [
   }
 ];
 
-app.get('/posts', (req, res) => {
-  res.json(posts);
+app.get('/posts', authenticateToken, (req, res) => {
+  res.json(posts.filter(post => post.username === req.user.username));
 });
 
 app.post('/login', (req, res) => {
   // Authenticate User (skipped this part, in another video)
 
   const username = req.body.username;
-  const user = {
-    username
-  };
+  const user = { username };
 
-  jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+  const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+  res.json({ accessToken });
 });
 
-app.listen(3000);
+// Middleware
+function authenticateToken(req, res, next) {
+  // Get Token that they send us
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  // Verify that this is correct user
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    // Return that user into the GetPost Function
+    req.user = user;
+    next();
+  });
+}
+
+app.listen(3000, () => console.log('App running on port 3000'));
