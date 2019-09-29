@@ -16,6 +16,7 @@ app.post("/users/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = { username: req.body.username, password: hashedPassword };
     users.push(user);
+    // 201 Status means "Created"
     res.status(201).send();
   } catch (err) {
     res.status(500).send();
