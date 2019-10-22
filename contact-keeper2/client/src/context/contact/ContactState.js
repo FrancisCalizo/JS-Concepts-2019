@@ -87,7 +87,7 @@ const ContactState = props => {
   };
 
   // Clear Filter
-  const clearFiter = () => {
+  const clearFilter = () => {
     dispatch({ type: CLEAR_FILTER });
   };
 
@@ -103,7 +103,7 @@ const ContactState = props => {
         setCurrent,
         clearCurrent,
         filterContacts,
-        clearCurrent
+        clearFilter
       }}
     >
       {props.children}
